@@ -1,5 +1,5 @@
 print('Working | 100%')
-getgenv().Host = 'roblox_user_7839972424, ninjitsu326'
+getgenv().Host = 'roblox_user_7839972424'
 local Whitelist = {Host, 'qqq'}
 
 local Players = game:GetService("Players")
