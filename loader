@@ -1,0 +1,300 @@
+print('Working | 100%')
+getgenv().Host = 'roblox_user_7839972424'
+local Whitelist = {Host, 'qqq'}
+
+local Players = game:GetService("Players")
+local HostPlayer = nil
+
+while not HostPlayer do
+    HostPlayer = Players:FindFirstChild(Host)
+    wait(1)
+end
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local function predictname(NameVariable)
+    local Table = game.Players:GetChildren()
+    for i, v in pairs(Table) do
+        if string.find(string.lower(v.Name), string.lower(NameVariable)) then
+            return v.Name
+        elseif string.find(string.lower(v.DisplayName), string.lower(NameVariable)) then
+            return v.Name
+        end
+    end
+end
+
+local function say(msg)
+    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+end
+
+local function followPlayer(playerName)
+    local targetPlayer = Players:FindFirstChild(playerName)
+    if targetPlayer and targetPlayer.Character then
+        local targetHumanoidRootPart = targetPlayer.Character:WaitForChild("HumanoidRootPart")
+        followActive = true
+        followTarget = targetPlayer
+        while followActive and targetPlayer and targetPlayer.Character and targetHumanoidRootPart do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetHumanoidRootPart.CFrame
+            wait(0)
+        end
+    end
+end
+
+local active = true
+local players, replicatedStorage = game:GetService("Players"), game:GetService("ReplicatedStorage")
+local defaultChatSystemChatEvents = replicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+local onMessageDoneFiltering = defaultChatSystemChatEvents:FindFirstChild("OnMessageDoneFiltering")
+
+local followActive = false
+local followTarget = nil
+
+onMessageDoneFiltering.OnClientEvent:Connect(function(messageData)
+    local speaker, message = players[messageData.FromSpeaker], messageData.Message
+
+    if not table.find(Whitelist, speaker.Name) then return end
+
+    if string.match(message, "^%.test") then
+        local args = message:split(" ")
+        table.remove(args, 1)
+        if not args[1] then
+            say('P1')
+        else
+            say('P2')
+        end
+    end
+
+    if string.match(message, "^%.chat") then
+        local Message = string.match(message, "^%.chat%s(.*)")
+        say(Message, "All")
+    end
+
+    if message == ".tp" then
+        local Root = game.Players.LocalPlayer.Character.HumanoidRootPart
+        local Target_Root = game.Players[Host].Character:WaitForChild("HumanoidRootPart")
+        Root.CFrame = Target_Root.CFrame
+    end
+
+    if message == ".reset" then
+        game.Players.LocalPlayer.Character.Humanoid.Health = 0
+    end
+
+    if message == ".jump" then
+        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end
+
+    if message == ".sit" then
+        game.Players.LocalPlayer.Character.Humanoid.Sit = true
+    end
+
+    if message == ".wave" then
+        game.Players:Chat("/e wave")
+    end
+
+    if message == ".laugh" then
+        game.Players:Chat("/e laugh")
+    end
+
+    if message == ".point" then
+        game.Players:Chat("/e point")
+    end
+
+    if message == ".d1" then
+        game.Players:Chat("/e dance")
+    end
+
+    if message == ".d2" then
+        game.Players:Chat("/e dance2")
+    end
+
+    if message == ".d3" then
+        game.Players:Chat("/e dance3")
+    end
+
+    if message == ".find" then
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("📡[AI]📡: Loading = 14", "All")
+        wait(0.35)
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("📡[AI]📡: Loading = 31", "All")
+        wait(0.35)
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("📡[AI]📡: Loading = 58", "All")
+        wait(0.35)
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("📡[AI]📡: Loading = 73", "All")
+        wait(0.35)
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("📡[AI]📡: Loading = 100", "All")
+        wait(0.35)
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("📡[AI]📡: ✅Owner Found✅", "All")
+    end
+
+if message == ".tweentp" then
+    local Root = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local Target_Root = game.Players[Host].Character:WaitForChild("HumanoidRootPart")
+
+    local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+
+    local tweenToHost = game:GetService("TweenService"):Create(Root, tweenInfo, {CFrame = Target_Root.CFrame})
+    tweenToHost:Play()
+    tweenToHost.Completed:Wait()
+end
+
+    if message == ".spin" then
+        while true do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(5), 0)
+            wait(0.0006)
+        end
+    end
+
+    if message == ".freeze" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    end
+
+    if message == ".unfreeze" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    end
+
+	if message == ".nullzone" then
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(314159, 314159, 999999)
+	end
+
+    if message == ".invisible" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Transparency = 1
+        for _, part in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if part:IsA("BasePart") then
+                part.Transparency = 1
+            end
+        end
+    end
+
+    if message == ".visible" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Transparency = 0
+        for _, part in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if part:IsA("BasePart") then
+                part.Transparency = 0
+            end
+        end
+    end
+
+    if string.match(message, "^%.follow%s") then
+        local targetName = message:sub(9)
+        followPlayer(targetName)
+    end
+
+    if message == ".stopfollow" then
+        followActive = false
+        followTarget = nil
+    end
+
+    if message == ".void" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(999999, -495, 999999)
+    end
+
+    if message == ".breakcam" then
+        game.Workspace.CurrentCamera.CFrame = CFrame.new(100000, 100000, 100000)
+    end
+
+    if message == ".cmds" then
+        say("📝COMMANDS📝: .jump .sit .tp .d1 .d2 .d3 .wave .point .laugh .reset .spin .freeze .unfreeze .invisible .visible (.follow [plrname] .stopfollow THESE ARE IN BETA!)")
+        say(".void .breakcam .disappear .nullzone .byebye .korblox .hi Etc.")
+        game.Players:Chat("/e cheer")
+    end
+
+if message == ".anchornull" then
+    local botHRP = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    botHRP.CFrame = CFrame.new(999999, 999999, 999999)
+    botHRP.Anchored = true
+end
+
+	if message == ".voidkill" then
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, -498, 0)
+	end
+
+    if message == ".korblox" then
+        game:GetService("Workspace").GytQMLdXHsPnCplqjDYu["Left Leg"]:Destroy()
+    end
+
+    if message == ".hi" then
+        say("😀Hi Player I am AI BOT😀")
+        game.Players:Chat("/e wave")
+        wait(1)
+        say("😆Nice to see you😆")
+    end
+
+    if message == ".speed" then
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 170
+    end
+
+    if message == ".sus" then
+        say("I want to be your catboy~~ :3")
+		wait(1)
+		say(">w< :3")
+    end
+
+if message == ".combust" then
+    local humanoid = game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+    humanoid.HipHeight = 0.0009
+end
+
+    if message == ".jump" then
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 170
+    end
+
+    if message == ".kick" then
+        game.Players.LocalPlayer.Kick()
+    end
+
+    if message == ".shutdown" then
+        game.Players.LocalPlayer.Kick("you just got coconut malled! send this to one of your friends to coconut mall them too! no but seriously get a life <3")
+    end
+
+    if message == ".load" then
+        say("💾==AI_Loaded==💾")
+        game.Players:Chat("/e cheer")
+        wait(1)
+        say("🖥Command Me Owner🖥")
+    end
+
+    if message == ".silentfind" then
+        say("a")
+        wait(2)
+        say("e")
+    end
+
+    if message == ".whomadeyou" then
+        say("🔨AI BOT Script Made By roblox_user_7839972424🔨")
+        game.Players:Chat("/e cheer")
+        wait(0.50)
+        say("⭐️ Current Script Version: Private V3.4 ⭐️")
+    end
+
+    if message == ".longwords" then
+        say("internationalizations {21 Letters}")
+        wait(1)
+        say("antiestablishmentarianism {25 Letters}")
+        wait(2.5)
+        say("uvulopalatopharyngoplasty {25 Letters}")
+        say("abetalipoproteinemia {20 Letters}")
+        say("Waiting {2.5} seconds...")
+        wait(2.5)
+        say("Lipochondrodystrophy {20 Letters}")
+        say("More long words coming soon!")
+    end
+
+    if message == ".bully" then
+        say("HAHAHAHA LOOK AT THIS NOOB!")
+        game.Players:Chat("/e laugh")
+        wait(0.5)
+        say("NOOB! HAHA!! NOOB!!")
+        wait(1)
+        say("LOSER ALERT!1!!")
+    end
+
+    if message == ".byebye" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(999999999, 999999999, 999999999)
+    end
+
+    if message == ".backrooms" then
+        local rootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+        local newPosition = rootPart.Position - Vector3.new(0, 15, 0)
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(newPosition))
+    end
+end)
