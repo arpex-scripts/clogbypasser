@@ -259,6 +259,34 @@ end
         say("e")
     end
 
+if message == ".youmessedup" then
+    -- Create the GUI
+    local player = game.Players.LocalPlayer
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = player:WaitForChild("PlayerGui")
+    
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(1, 0, 1, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    frame.BackgroundTransparency = 0
+    frame.Parent = screenGui
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(0, 500, 0, 100)
+    textLabel.Position = UDim2.new(0.5, -250, 0.5, -50)
+    textLabel.Text = "your fucking retarded!!!1 lol!11"
+    textLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+    textLabel.TextSize = 40
+    textLabel.TextStrokeTransparency = 0.8
+    textLabel.BackgroundTransparency = 1
+    textLabel.Parent = frame
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://1847724232"
+    sound.Parent = player.Character or player:WaitForChild("Character")
+    sound:Play()
+	game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = false
+	game.Lighting.TimeOfDay = "20:00:00"
+end
+
     if message == ".whomadeyou" then
         say("🔨AI BOT Script Made By roblox_user_7839972424🔨")
         game.Players:Chat("/e cheer")
